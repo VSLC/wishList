@@ -1,10 +1,7 @@
 import { connection } from '../db.js'
+import { Film } from '../protocols/Film.js';
 
-const createMovie = (body: {
-    name: string,
-    platform: string,
-    gender: number,
-}) => {
+const createMovie = (body: Film) => {
     return connection.query(`
     INSERT INTO films (name,platform,gender) VALUES ($1,$2,$3)`,
         [body.name, body.platform, body.gender]);

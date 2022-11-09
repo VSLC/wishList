@@ -1,13 +1,10 @@
 import { connection } from '../db.js';
 import { Request, Response } from 'express';
 import filmRepository from '../repositories/FilmRepository.js'
+import { Film } from '../protocols/Film.js';
 
 const insertMovie = async (req: Request, res: Response) => {
-    const body: {
-        name: string,
-        platform: string,
-        gender: number,
-    } = req.body;
+    const body = req.body as Film;
 
     const result = await filmRepository.createMovie(body);
     return res.status(200).send("ok");
