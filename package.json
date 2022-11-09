@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,10 +18,17 @@
   },
   "homepage": "https://github.com/voller-96/wishList#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "@types/dotenv": "^8.2.0",
+    "@types/pg": "^8.6.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "pg": "^8.8.0",
+    "ts-dotenv": "^0.9.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.14",
+    "@types/node": "^18.11.9",
     "nodemon": "^2.0.20",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.4"

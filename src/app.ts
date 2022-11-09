@@ -1,12 +1,11 @@
 import express from 'express';
-import { Request, Response } from 'express';
+import FilmRouter from './routers/FilmRouters.js';
 
 const server = express();
+server.use(express.json())
 
-server.get('/', (req: Request, res: Response) => {
-    res.send("ok")
-})
+server.use(FilmRouter);
 
 server.listen(4000, () => {
-    console.log("Rodando na porta 4000")
-})
+    console.log("Rodando na porta 4000");
+});
