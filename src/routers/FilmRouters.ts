@@ -6,6 +6,6 @@ const router = express.Router();
 router.post('/movie', insertMovie);
 router.delete('/movie/:id', deleteMovie);
 router.get('/movie', getMovie);
-router.put('/movie', updateMovieStatus)
+router.put('/movie/:id', updateMovieStatus)
 
 export default router;

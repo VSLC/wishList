@@ -25,11 +25,25 @@ const deleteMovie = (id: number) => {
     `, [id]);
 }
 
+const updateMovieStatus = (id: number) => {
+    return connection.query(`
+    UPDATE films SET status=true WHERE id=$1
+    `, [id])
+}
+
+const insertMovieNote = (note: string) => {
+    return connection.query(`
+    INSERT INTO notes (name,platform,gender) VALUES ($1)`,
+        [note]);
+}
+
 const filmRepository = {
     createMovie,
     getMovie,
     deleteMovie,
-    getMovieById
+    getMovieById,
+    updateMovieStatus,
+    insertMovieNote
 }
 
 export default filmRepository;

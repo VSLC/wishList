@@ -2,8 +2,8 @@
     "compilerOptions": {
         "outDir": "dist",
         "esModuleInterop": true,
-        "moduleResolution": "node",
-        "module": "es6",
+        "moduleResolution": "Node",
+        "module": "ES6",
         "typeRoots": [
             "./node_modules/@types",
             "./src/types"
