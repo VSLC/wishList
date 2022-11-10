@@ -15,20 +15,35 @@ const insertMovie = async (req: Request, res: Response) => {
     const validation = filmSchema.validate(body);
 
     if (validation.error) {
-        return res.status(400).send(validation.error.message)
+        return res.status(400).send(validation.error.message);
     }
     const result = await filmRepository.createMovie(body);
     return res.status(200).send("ok");
 }
 
-const getMovie = async (req: Request, res: Response) => {
-    const result = await filmRepository.getMovie();
-    const movies = result.rows;
+const getMovieQuantityByPlatform = async (req: Request, res: Response) => {
+    const platform = req.query.platform as string;
+    const result = await filmRepository.getQuantityOfFilmsByPlatform(platform);
+
+    if (platform === undefined) {
+        return res.status(400).send("Platform must be informed via query string");
+    }
+
+
+
+    return res.status(200).send(result.rows);
+
+}
+
+const getMovieByPlatform = async (req: Request, res: Response) => {
+    const platform = req.query.platform as string;
+    const result = await filmRepository.getMovieByPlatform(platform);
+    console.log(result);
 
     if (result.rowCount === 0) {
         return res.status(404).send([]);
     }
-    return res.status(200).send(movies)
+    return res.status(200).send(result.rows);
 }
 
 const deleteMovie = async (req: Request, res: Response) => {
@@ -36,7 +51,6 @@ const deleteMovie = async (req: Request, res: Response) => {
     const resultGetMovieById = await filmRepository.getMovieById(id);
 
     if (resultGetMovieById.rowCount === 0) {
-        console.log("entrou")
         return res.sendStatus(404);
     }
 
@@ -49,8 +63,6 @@ const updateMovieStatus = async (req: Request, res: Response) => {
     const note: string = req.body.note;
 
     const body = { idFilm: Number(id), note: note } as Note;
-    console.log(body);
-
     const validation = noteSchema.validate(body);
     if (validation.error) {
         return res.status(400).send(validation.error.message);
@@ -63,4 +75,4 @@ const updateMovieStatus = async (req: Request, res: Response) => {
 
 }
 
-export { insertMovie, getMovie, deleteMovie, updateMovieStatus }
+export { insertMovie, getMovieByPlatform, deleteMovie, updateMovieStatus, getMovieQuantityByPlatform }

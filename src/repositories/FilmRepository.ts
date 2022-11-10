@@ -7,10 +7,16 @@ const createMovie = (body: Film) => {
         [body.name, body.platform, body.gender]);
 }
 
-const getMovie = () => {
+const getMovieByPlatform = (platform: string) => {
     return connection.query(`
-    SELECT * FROM films
-    `);
+    SELECT * FROM films WHERE platform=$1
+    `, [platform]);
+}
+
+const getQuantityOfFilmsByPlatform = (platform: string) => {
+    return connection.query(`
+    SELECT COUNT(*) FROM films WHERE platform=$1 GROUP BY platform
+    `, [platform])
 }
 
 const getMovieById = (id: number) => {
@@ -31,19 +37,15 @@ const updateMovieStatus = (id: number) => {
     `, [id])
 }
 
-const insertMovieNote = (note: string) => {
-    return connection.query(`
-    INSERT INTO notes (name,platform,gender) VALUES ($1)`,
-        [note]);
-}
+
 
 const filmRepository = {
     createMovie,
-    getMovie,
+    getMovieByPlatform,
     deleteMovie,
     getMovieById,
     updateMovieStatus,
-    insertMovieNote
+    getQuantityOfFilmsByPlatform
 }
 
 export default filmRepository;
