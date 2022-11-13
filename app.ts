@@ -1,5 +1,5 @@
 import express from 'express';
-import FilmRouter from './routers/FilmRouters.js';
+import FilmRouter from './src/routers/FilmRouters.js';
 
 const server = express();
 server.use(express.json())
