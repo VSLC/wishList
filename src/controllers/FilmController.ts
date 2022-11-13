@@ -29,15 +29,13 @@ const getMovieQuantityByPlatform = async (req: Request, res: Response) => {
         return res.status(400).send("Platform must be informed via query string");
     }
 
-
-
     return res.status(200).send(result.rows);
 
 }
 
-const getMovieByPlatform = async (req: Request, res: Response) => {
+const getMovie = async (req: Request, res: Response) => {
     const platform = req.query.platform as string;
-    const result = await filmRepository.getMovieByPlatform(platform);
+    const result = await filmRepository.getMovies(platform);
     console.log(result);
 
     if (result.rowCount === 0) {
@@ -55,7 +53,7 @@ const deleteMovie = async (req: Request, res: Response) => {
     }
 
     const resultDeleteMovie = await filmRepository.deleteMovie(id);
-    return res.sendStatus(200);
+    return res.sendStatus(204);
 }
 
 const updateMovieStatus = async (req: Request, res: Response) => {
@@ -75,4 +73,4 @@ const updateMovieStatus = async (req: Request, res: Response) => {
 
 }
 
-export { insertMovie, getMovieByPlatform, deleteMovie, updateMovieStatus, getMovieQuantityByPlatform }
+export { insertMovie, getMovie, deleteMovie, updateMovieStatus, getMovieQuantityByPlatform }
