@@ -1,5 +1,4 @@
 import Joi from 'joi';
-import { join } from 'path';
 
 const filmSchema = Joi.object({
     name: Joi.string().required(),
