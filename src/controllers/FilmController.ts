@@ -23,7 +23,7 @@ const insertMovie = async (req: Request, res: Response) => {
         return res.status(200).send("ok");
 
     } catch (error) {
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 }
 
@@ -39,7 +39,7 @@ const getMovieQuantityByPlatform = async (req: Request, res: Response) => {
         return res.status(200).send(result.rows);
 
     } catch (error) {
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 
 }
@@ -55,7 +55,7 @@ const getMovie = async (req: Request, res: Response) => {
         }
         return res.status(200).send(result.rows);
     } catch (error) {
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 
 }
@@ -73,7 +73,7 @@ const deleteMovie = async (req: Request, res: Response) => {
         return res.sendStatus(204);
 
     } catch (error) {
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 
 }
@@ -94,7 +94,7 @@ const updateMovieStatus = async (req: Request, res: Response) => {
         return res.sendStatus(200);
 
     } catch (error) {
-        res.sendStatus(500)
+        return res.sendStatus(500)
     }
 
 }
