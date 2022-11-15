@@ -17,43 +17,65 @@ const insertMovie = async (req: Request, res: Response) => {
     if (validation.error) {
         return res.status(400).send(validation.error.message);
     }
-    const result = await filmRepository.createMovie(body);
-    return res.status(200).send("ok");
+
+    try {
+        const result = await filmRepository.createMovie(body);
+        return res.status(200).send("ok");
+
+    } catch (error) {
+        res.sendStatus(500);
+    }
 }
 
 const getMovieQuantityByPlatform = async (req: Request, res: Response) => {
     const platform = req.query.platform as string;
-    const result = await filmRepository.getQuantityOfFilmsByPlatform(platform);
+    try {
+        const result = await filmRepository.getQuantityOfFilmsByPlatform(platform);
 
-    if (platform === undefined) {
-        return res.status(400).send("Platform must be informed via query string");
+        if (platform === undefined) {
+            return res.status(400).send("Platform must be informed via query string");
+        }
+
+        return res.status(200).send(result.rows);
+
+    } catch (error) {
+        res.sendStatus(500);
     }
-
-    return res.status(200).send(result.rows);
 
 }
 
 const getMovie = async (req: Request, res: Response) => {
     const platform = req.query.platform as string;
-    const result = await filmRepository.getMovies(platform);
-    console.log(result);
+    try {
+        const result = await filmRepository.getMovies(platform);
+        console.log(result);
 
-    if (result.rowCount === 0) {
-        return res.status(404).send([]);
+        if (result.rowCount === 0) {
+            return res.status(404).send([]);
+        }
+        return res.status(200).send(result.rows);
+    } catch (error) {
+        res.sendStatus(500);
     }
-    return res.status(200).send(result.rows);
+
 }
 
 const deleteMovie = async (req: Request, res: Response) => {
     const id: number = Number(req.params.id);
-    const resultGetMovieById = await filmRepository.getMovieById(id);
+    try {
+        const resultGetMovieById = await filmRepository.getMovieById(id);
 
-    if (resultGetMovieById.rowCount === 0) {
-        return res.sendStatus(404);
+        if (resultGetMovieById.rowCount === 0) {
+            return res.sendStatus(404);
+        }
+
+        const resultDeleteMovie = await filmRepository.deleteMovie(id);
+        return res.sendStatus(204);
+
+    } catch (error) {
+        res.sendStatus(500);
     }
 
-    const resultDeleteMovie = await filmRepository.deleteMovie(id);
-    return res.sendStatus(204);
 }
 
 const updateMovieStatus = async (req: Request, res: Response) => {
@@ -65,11 +87,15 @@ const updateMovieStatus = async (req: Request, res: Response) => {
     if (validation.error) {
         return res.status(400).send(validation.error.message);
     }
+    try {
+        const insertNote = await noteRepository.insertMovieNote(body);
+        const updateMovie = await filmRepository.updateMovieStatus(id);
 
-    const insertNote = await noteRepository.insertMovieNote(body);
-    const updateMovie = await filmRepository.updateMovieStatus(id);
+        return res.sendStatus(200);
 
-    return res.sendStatus(200)
+    } catch (error) {
+        res.sendStatus(500)
+    }
 
 }
 
